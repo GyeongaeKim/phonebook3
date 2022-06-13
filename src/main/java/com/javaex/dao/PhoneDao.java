@@ -106,6 +106,8 @@ public class PhoneDao {
 			query += "         hp, ";
 			query += "         company ";
 			query += " from person";
+			query += " order by person_id desc ";
+			
 
 			if (keword != "" || keword == null) {
 				query += " where name like ? ";
