@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.dao.PhoneDao;
+import com.javaex.service.PhoneService;
 import com.javaex.vo.PersonVo;
 
 @Controller
@@ -19,7 +20,7 @@ public class PhoneController{
 	
 	//필드
 	@Autowired
-	private PhoneDao phoneDao;	//=new PhoneDao() 주입할 필요없음!! 
+	private PhoneService phoneService;	//=new PhoneDao() 주입할 필요없음!! 
 	//Dao에는 @Repository붙였고, 여기서는 Autowired붙였기 때문 
 	
 			
@@ -34,8 +35,10 @@ public class PhoneController{
 		System.out.println("PhoneController>list()");
 		
 		//Dao - getPersonList 꺼내오기
-		//PhoneDao phoneDao = new PhoneDao();
-		List<PersonVo> personList = phoneDao.getPersonList();
+		//Service를 통해서 personList(주소)를 가져온다 ***
+		//PhoneService phoneService = new PhoneService();
+		////PhoneDao phoneDao = new PhoneDao();
+		List<PersonVo> personList = phoneService.getPersonList();
 		
 		//Model을 통해, DispatcherServlet에게 데이터 보내기(request attribute에 넣는다)
 		model.addAttribute("personList", personList);
@@ -61,27 +64,21 @@ public class PhoneController{
 	public String write(@ModelAttribute PersonVo personVo) { 
 		/* 파라미터를 하나하나 꺼낼필요 없이 한꺼번에 Vo로 꺼내올 수 있다*/
 		
-		
 		/*(@ModelAttribute PersonVo personVo,
 		 					@RequestParam("age") int age,
 		 					@RequestParam("name") String name)*/
 		/* Vo와 함께 필요한 파라미터들을 따로 꺼낼수도 있다. */
-		
-		
 		System.out.println("PhoneController>write()");
-		
 		
 		
 		//파라미터 꺼낼 필요 없어짐
 		//파라미터들을 한꺼번에 personVo로 꺼냈음-> 개별의 파라미터들을 vo로 묶을 필요가 없음
-		
 		System.out.println(personVo);
 		//System.out.println(age);
-		
-		
-		//dao로 저장하기
+
+		//Service를 통해서 저장한다
 		//PhoneDao phoneDao = new PhoneDao();
-		phoneDao.personInsert(personVo);
+		phoneService.personInsert(personVo);
 		
 		
 		//리다이렉트
@@ -89,7 +86,9 @@ public class PhoneController{
 		return "redirect:/list";
 	}
 	
+	
 	//전화번호 등록2(파라미터를 하나씩 꺼내는 경우)
+	/*
 	@RequestMapping(value="/write2", method={RequestMethod.GET, RequestMethod.POST})
 	public String write2(@RequestParam("name") String name, 
 						@RequestParam("hp") String hp, 
@@ -97,11 +96,11 @@ public class PhoneController{
 		System.out.println("PhoneController>write()");
 		
 		//파라미터 꺼내기
-		/*
+		
 		System.out.println(name);
 		System.out.println(hp);
 		System.out.println(company);
-		*/
+		
 		
 		
 		//vo로 묶기
@@ -117,9 +116,7 @@ public class PhoneController{
 		//리스트로 리다이렉트 시킬 예정(포워드 x)
 		return "redirect:/list";
 	}
-	
-	
-	
+	*/
 	
 	
 	
@@ -133,12 +130,13 @@ public class PhoneController{
 		
 		//Dao로 처리하기(삭제)
 		//PhoneDao phoneDao = new PhoneDao();
-		int count = phoneDao.personDelete(num);
+		int count = phoneService.personDelete(num);
 		System.out.println(count);
 		
 		return "redirect:/list";
 	}
 	
+	/*
 	@RequestMapping(value="/delete2", method={RequestMethod.GET, RequestMethod.POST})
 	public String delete2(@RequestParam("no") int no) {
 		System.out.println("PhoneController>delete()");
@@ -155,7 +153,7 @@ public class PhoneController{
 		
 		return "redirect:/list";
 	}
-	
+	*/
 	
 	
 	
@@ -176,7 +174,7 @@ public class PhoneController{
 		
 		//PhoneDao personUpdate()로 수정하기
 		//PhoneDao phoneDao = new PhoneDao();
-		int count = phoneDao.personUpdate(personVo);
+		int count = phoneService.personUpdate(personVo);
 		System.out.println(count);
 		
 		//리다이렉트 list
