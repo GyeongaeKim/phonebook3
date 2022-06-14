@@ -35,8 +35,8 @@ public class PhoneController{
 		//Model을 통해, DispatcherServlet에게 데이터 보내기(request attribute에 넣는다)
 		model.addAttribute("personList", personList);
 		
-		//포워드
-		return "/WEB-INF/views/list.jsp";
+		//포워드-뷰리졸버 사용하여 간단하게 포워드 가능
+		return "list";
 	}
 	
 	
@@ -47,7 +47,7 @@ public class PhoneController{
 	public String writeForm() {
 		System.out.println("PhoneController>writeForm()");
 		
-		return "/WEB-INF/views/writeForm.jsp";
+		return "writeForm";
 	}
 	
 	//등록메소드
@@ -161,7 +161,7 @@ public class PhoneController{
 	public String updateForm() {
 		System.out.println("PhoneController>updateForm()");
 		
-		return "/WEB-INF/views/updateForm.jsp";
+		return "updateForm";
 	}
 	
 	//6. 전화번호 수정
@@ -189,7 +189,7 @@ public class PhoneController{
 	public String test() {
 		System.out.println("PhoneController>test()");
 		
-		return "/WEB-INF/views/test.jsp";
+		return "test";
 	} 
 	*/
 }
