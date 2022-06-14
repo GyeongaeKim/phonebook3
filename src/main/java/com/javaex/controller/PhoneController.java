@@ -2,6 +2,7 @@ package com.javaex.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,7 +18,11 @@ import com.javaex.vo.PersonVo;
 public class PhoneController{
 	
 	//필드
+	@Autowired
+	private PhoneDao phoneDao;	//=new PhoneDao() 주입할 필요없음!! 
+	//Dao에는 @Repository붙였고, 여기서는 Autowired붙였기 때문 
 	
+			
 	//생성자
 	
 	//메소드 gs
@@ -29,7 +34,7 @@ public class PhoneController{
 		System.out.println("PhoneController>list()");
 		
 		//Dao - getPersonList 꺼내오기
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		List<PersonVo> personList = phoneDao.getPersonList();
 		
 		//Model을 통해, DispatcherServlet에게 데이터 보내기(request attribute에 넣는다)
@@ -75,7 +80,7 @@ public class PhoneController{
 		
 		
 		//dao로 저장하기
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		phoneDao.personInsert(personVo);
 		
 		
@@ -104,7 +109,7 @@ public class PhoneController{
 		System.out.println(personVo);
 		
 		//dao로 저장하기
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		phoneDao.personInsert(personVo);
 		
 		
@@ -127,7 +132,7 @@ public class PhoneController{
 		System.out.println(num);
 		
 		//Dao로 처리하기(삭제)
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.personDelete(num);
 		System.out.println(count);
 		
@@ -170,7 +175,7 @@ public class PhoneController{
 		System.out.println("PhoneController>update()");
 		
 		//PhoneDao personUpdate()로 수정하기
-		PhoneDao phoneDao = new PhoneDao();
+		//PhoneDao phoneDao = new PhoneDao();
 		int count = phoneDao.personUpdate(personVo);
 		System.out.println(count);
 		
